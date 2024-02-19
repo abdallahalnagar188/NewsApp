@@ -9,28 +9,29 @@ import androidx.compose.runtime.remember
 import com.example.newsapp.Constance
 import com.example.newsapp.NewsSourcesTabs
 import com.example.newsapp.api.APIManager
-import com.example.newsapp.api.model.Category
 import com.example.newsapp.api.model.SourceItem
 import com.example.newsapp.api.model.SourceResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-val NEWS_ROUTE = "news"
+const val NEWS_ROUTE = "news/{category}"
+
 @Composable
-fun NewsFragment(category:String?) {
+fun NewsFragment(category: String?) {
     var sourcesList = remember {
         mutableStateOf<List<SourceItem>>(listOf())
     }
-    getNewsSources(category,sourcesList)
+    getNewsSources(category, sourcesList)
     Column {
         NewsSourcesTabs(sourcesItemsList = sourcesList.value)
     }
 }
-fun getNewsSources(category:String?,sourcesList : MutableState<List<SourceItem>>){
+
+fun getNewsSources(category: String?, sourcesList: MutableState<List<SourceItem>>) {
     APIManager.
     getNewsServices().
-    getNewsSources( Constance.API_KEY,category = category?:"")
+    getNewsSources(Constance.API_KEY, category = category ?: "")
 
         .enqueue(object : Callback<SourceResponse> {
             override fun onResponse(

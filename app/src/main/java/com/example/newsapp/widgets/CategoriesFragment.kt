@@ -53,7 +53,7 @@ fun CategoryCard(item: Category, position: Int,navHostController: NavHostControl
         colorResource(id = item.backGroundColor)),
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 12.dp),
         onClick = {
-                  navHostController.navigate("$NEWS_ROUTE/${item.apiID}")
+                  navHostController.navigate("news/${item.apiID}")
         }
         ,
         shape =

@@ -1,9 +1,7 @@
 package com.example.newsapp
 
 import android.annotation.SuppressLint
-import android.graphics.Paint.Style
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -23,14 +21,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -44,16 +38,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
-import androidx.navigation.NavigatorProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.newsapp.api.APIManager
 import com.example.newsapp.api.model.SourceItem
-import com.example.newsapp.api.model.SourceResponse
 import com.example.newsapp.ui.theme.NewsAppTheme
 import com.example.newsapp.widgets.CategoriesContent
 import com.example.newsapp.widgets.DrawerBody
@@ -61,10 +49,8 @@ import com.example.newsapp.widgets.DrawerHeader
 import com.example.newsapp.widgets.NEWS_ROUTE
 import com.example.newsapp.widgets.NewsFragment
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-val CATEGORY_ROUTE = "categories"
+
+const val CATEGORY_ROUTE = "categories"
 
 class MainActivity : ComponentActivity() {
 
@@ -74,9 +60,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewsAppTheme {
-                var sourcesList: MutableState<List<SourceItem>> = remember {
-                    mutableStateOf(listOf())
-                }
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
                 ModalNavigationDrawer(drawerContent = {
@@ -97,10 +80,8 @@ class MainActivity : ComponentActivity() {
                                 CategoriesContent(navController)
                             }
                             composable(
-                                route = "$NEWS_ROUTE/category",
-                                arguments = listOf(navArgument(name ="category"){
-                                    type = NavType.StringType
-                            })){
+                                route = NEWS_ROUTE,
+                            ){
                                 val argument = it.arguments?.getString("category")
                                 NewsFragment(argument)
                             }
