@@ -14,7 +14,7 @@ object Constance {
         ),Category(
             "business",R.drawable.bussines,R.string.business,R.color.bony
         ),Category(
-            "entertainment",R.drawable.environment,R.string.entertainment,R.color.light_blue
+            "general",R.drawable.environment,R.string.general,R.color.light_blue
         ),Category(
             "science",R.drawable.science,R.string.science,R.color.yellow
         ),

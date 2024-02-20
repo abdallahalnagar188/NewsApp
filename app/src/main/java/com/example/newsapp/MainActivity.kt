@@ -34,11 +34,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.ui.theme.NewsAppTheme
-import com.example.newsapp.widgets.CategoriesContent
+import com.example.newsapp.widgets.category.CategoriesContent
 import com.example.newsapp.widgets.DrawerBody
 import com.example.newsapp.widgets.DrawerHeader
-import com.example.newsapp.widgets.NEWS_ROUTE
-import com.example.newsapp.widgets.NewsFragment
+import com.example.newsapp.widgets.news.NEWS_ROUTE
+import com.example.newsapp.widgets.news.NewsFragment
 import kotlinx.coroutines.launch
 
 const val CATEGORY_ROUTE = "categories"
@@ -52,27 +52,34 @@ class MainActivity : ComponentActivity() {
         setContent {
             NewsAppTheme {
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+                val navController = rememberNavController()
+                val scope = rememberCoroutineScope()
+
 
                 ModalNavigationDrawer(drawerContent = {
                     Column(modifier = Modifier.fillMaxSize()) {
                         DrawerHeader()
-                        DrawerBody()
+                        DrawerBody(navController) {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                        }
                     }
                 }, drawerState = drawerState) {
                     Scaffold(topBar = { NewsAppBar(drawerState) }) {
 //                        NewsSourcesTabs(sourcesItemsList = sourcesList.value)
-                        val navController = rememberNavController()
                         NavHost(
                             navController = navController,
                             startDestination = CATEGORY_ROUTE,
-                            modifier = Modifier.padding(top = it.calculateTopPadding()))
+                            modifier = Modifier.padding(top = it.calculateTopPadding())
+                        )
                         {
-                            composable(route = CATEGORY_ROUTE){
+                            composable(route = CATEGORY_ROUTE) {
                                 CategoriesContent(navController)
                             }
                             composable(
                                 route = NEWS_ROUTE,
-                            ){
+                            ) {
                                 val argument = it.arguments?.getString("category")
                                 NewsFragment(argument)
                             }
@@ -113,7 +120,6 @@ fun NewsAppBar(drawerState: DrawerState) {
 
     )
 }
-
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

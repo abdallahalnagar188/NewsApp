@@ -76,4 +76,13 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+
+    val lifecycle_version = "2.7.0"
+    val arch_version = "2.2.0"
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    // Lifecycle utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version")
 }

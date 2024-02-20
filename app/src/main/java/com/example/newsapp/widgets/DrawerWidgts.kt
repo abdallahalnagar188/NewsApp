@@ -1,13 +1,13 @@
 package com.example.newsapp.widgets
 
-import android.graphics.Paint.Style
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +22,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.newsapp.CATEGORY_ROUTE
 import com.example.newsapp.R
 
 @Composable
@@ -40,28 +42,44 @@ fun DrawerHeader() {
 }
 
 @Composable
-fun DrawerBody() {
-    Column(modifier = Modifier
-        .fillMaxWidth(0.75F)
-        .fillMaxHeight()
-        .background(Color.White)) {
+fun DrawerBody(navController: NavHostController, onClose: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(0.75F)
+            .fillMaxHeight()
+            .background(Color.White)
+    ) {
         Spacer(modifier = Modifier.padding(12.dp))
-        NewsDrawerItem(iconId = R.drawable.ico_catigores, textId = R.string.categories)
+        NewsDrawerItem(iconId = R.drawable.ico_catigores, textId = R.string.categories,
+            onNewsDrawerItemClick = {
+                navController.navigate(CATEGORY_ROUTE)
+                onClose()
+            })
         Spacer(modifier = Modifier.padding(12.dp))
-        NewsDrawerItem(iconId = R.drawable.ico_settings, textId = R.string.settings)
+        NewsDrawerItem(iconId = R.drawable.ico_settings, textId = R.string.settings,
+            onNewsDrawerItemClick = {
+
+
+            })
     }
 }
 
 @Composable
-fun NewsDrawerItem(iconId: Int, textId: Int) {
+fun NewsDrawerItem(iconId: Int, textId: Int, onNewsDrawerItemClick: () -> Unit) {
     Row(
         modifier = Modifier
+            .padding(12.dp)
             .fillMaxWidth()
             .background(Color.White)
+            .clickable {
+                onNewsDrawerItemClick()
+            }
     )
     {
-        Spacer(modifier = Modifier.width(10.dp))
-        Icon(painter = painterResource(id = iconId), contentDescription = "")
+        Icon(
+            painter = painterResource(id = iconId),
+            contentDescription = ""
+        )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
             text = stringResource(id = textId), style = TextStyle(

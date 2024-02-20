@@ -1,4 +1,4 @@
-package com.example.newsapp.widgets
+package com.example.newsapp.widgets.news
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -8,17 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,56 +21,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.newsapp.Constance
-import com.example.newsapp.api.APIManager
 import com.example.newsapp.api.model.ArticlesItem
-import com.example.newsapp.api.model.NewsResponse
 import com.example.newsapp.api.model.SourceItem
-import com.example.newsapp.api.model.SourceResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 const val NEWS_ROUTE = "news/{category}"
 
 @Composable
-fun NewsFragment(category: String?) {
-    val sourcesList = remember {
-        mutableStateOf<List<SourceItem>>(listOf())
-    }
-    val newsList = remember {
-        mutableStateOf<List<ArticlesItem>>(listOf())
-    }
+fun NewsFragment(category: String?,viewModel: NewsViewModel= androidx.lifecycle.viewmodel.compose.viewModel()) {
 
-    getNewsSources(category, sourcesList)
+
+    viewModel.getNewsSources(category, viewModel.sourcesList)
     Column {
-        NewsSourcesTabs(sourcesItemsList = sourcesList.value, newsList)
-        NewsList(articlesItem = newsList.value)
+        NewsSourcesTabs(sourcesItemsList = viewModel.sourcesList.value,viewModel. newsList)
+        NewsList(articlesItem = viewModel.newsList.value)
     }
 }
 
 @Composable
 fun NewsSourcesTabs(
     sourcesItemsList: List<SourceItem>,
-    newsResponseState: MutableState<List<ArticlesItem>>
+    newsResponseState: MutableState<List<ArticlesItem>>,
+    viewModel: NewsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
-    var selectedIndex by remember {
-        mutableStateOf(0)
-    }
+
     if (sourcesItemsList.isNotEmpty())
-        ScrollableTabRow(selectedTabIndex = selectedIndex,
+        ScrollableTabRow(selectedTabIndex = viewModel.selectedIndex.value,
         containerColor = Color.Transparent,
         divider = {},
         indicator = {}) {
         sourcesItemsList.forEachIndexed { index, sourcesItem ->
-            Tab(selected = selectedIndex == index,
+            if (viewModel.selectedIndex.value == index) {
+                viewModel.getNewsBySources(sourcesItem, newsResponseState)
+
+            }
+            Tab(selected = viewModel.selectedIndex.value == index,
                 onClick = {
-                    selectedIndex = index
-                    getNewsBySources(sourcesItem, newsResponseState)
+                    viewModel.selectedIndex.value = index
                 },
                 selectedContentColor = Color.White,
                 unselectedContentColor = Color(0xFF39A552),
-                modifier = if (selectedIndex == index) Modifier
+                modifier = if (viewModel.selectedIndex.value == index) Modifier
                     .padding(end = 6.dp, top = 8.dp, bottom = 8.dp)
                     .background(
                         Color(0xFF39A552), RoundedCornerShape(50)
@@ -133,46 +117,4 @@ fun NewsCard(articlesItem: ArticlesItem) {
                 .padding(4.dp, 2.dp)
         )
     }
-}
-
-
-fun getNewsBySources(
-    sourcesItem: SourceItem,
-    newsResponseState: MutableState<List<ArticlesItem>>
-) {
-    APIManager.getNewsServices().getNewsBySources(Constance.API_KEY, sourcesItem.id ?: "")
-        .enqueue(object : Callback<NewsResponse> {
-            override fun onResponse(
-                call: Call<NewsResponse>, response: Response<NewsResponse>
-            ) {
-                val newsResponse = response.body()
-                newsResponseState.value = newsResponse?.articles!!
-            }
-
-            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
-
-            }
-
-        })
-}
-
-fun getNewsSources(category: String?, sourcesList: MutableState<List<SourceItem>>) {
-    APIManager.getNewsServices().getNewsSources(Constance.API_KEY, category = category ?: "")
-
-        .enqueue(object : Callback<SourceResponse> {
-            override fun onResponse(
-                call: Call<SourceResponse>, response: Response<SourceResponse>
-            ) {
-                val body = response.body()
-//                Log.e("TAG", "onResponse: ${body?.status}")
-//                Log.e("TAG", "onResponse: ${body?.sources}")
-                sourcesList.value = (body?.sources ?: listOf()) as List<SourceItem>
-            }
-
-            override fun onFailure(call: Call<SourceResponse>, t: Throwable) {
-
-            }
-
-        })
-
 }

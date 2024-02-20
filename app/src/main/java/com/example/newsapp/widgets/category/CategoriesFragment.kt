@@ -1,4 +1,4 @@
-package com.example.newsapp.widgets
+package com.example.newsapp.widgets.category
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -53,7 +53,7 @@ fun CategoryCard(item: Category, position: Int,navHostController: NavHostControl
         colorResource(id = item.backGroundColor)),
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 12.dp),
         onClick = {
-                  navHostController.navigate("news/${item.apiID}")
+            navHostController.navigate("news/${item.apiID}")
         }
         ,
         shape =
