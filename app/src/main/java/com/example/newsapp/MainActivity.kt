@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,17 +16,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScrollableTabRow
-import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -41,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.newsapp.api.model.SourceItem
 import com.example.newsapp.ui.theme.NewsAppTheme
 import com.example.newsapp.widgets.CategoriesContent
 import com.example.newsapp.widgets.DrawerBody
@@ -124,40 +115,6 @@ fun NewsAppBar(drawerState: DrawerState) {
 }
 
 
-@Composable
-fun NewsSourcesTabs(
-    sourcesItemsList: List<SourceItem>
-) {
-    var selectedIndex by remember {
-        mutableStateOf(0)
-    }
-    if (sourcesItemsList.isNotEmpty()) ScrollableTabRow(selectedTabIndex = selectedIndex,
-        containerColor = Color.Transparent,
-        divider = {},
-        indicator = {}) {
-        sourcesItemsList.forEachIndexed { index, sourcesItem ->
-            Tab(selected = selectedIndex == index,
-                onClick = {
-                    selectedIndex = index
-                },
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color(0xFF39A552),
-                modifier = if (selectedIndex == index) Modifier
-                    .padding(end = 6.dp, top = 8.dp, bottom = 8.dp)
-                    .background(
-                        Color(0xFF39A552), RoundedCornerShape(50)
-                    )
-                else Modifier
-                    .padding(end = 6.dp,top = 8.dp, bottom = 8.dp)
-                    .border(
-                        2.dp, Color(0xFF39A552), RoundedCornerShape(50)
-                    ),
-                text = { Text(text = sourcesItem.name ?: "") }
-
-            )
-        }
-    }
-}
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true, showSystemUi = true)
@@ -165,17 +122,7 @@ fun NewsSourcesTabs(
 fun Preview() {
     NewsAppTheme {
         Scaffold {
-            NewsSourcesTabs(
-                sourcesItemsList = listOf(
-                    SourceItem(name = "abdallah"),
-                    SourceItem(name = "abdallah"),
-                    SourceItem(name = "abdallah"),
-                    SourceItem(name = "abdallah"),
-                    SourceItem(name = "abdallah"),
-                    SourceItem(name = "abdallah"),
-                    SourceItem(name = "abdallah"),
-                )
-            )
+
         }
     }
 }

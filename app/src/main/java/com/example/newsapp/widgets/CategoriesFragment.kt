@@ -30,7 +30,7 @@ import com.example.newsapp.api.model.Category
 
 @Composable
 fun CategoriesContent(navHostController: NavHostController) {
-    Column(modifier = Modifier.fillMaxSize().padding(12.dp)) {
+    Column(modifier = Modifier.fillMaxSize().padding(12 .dp)) {
         Text(modifier = Modifier.padding(12.dp),
             text = "Pick your category\n" +
                     "on interested",
@@ -75,7 +75,8 @@ fun CategoryCard(item: Category, position: Int,navHostController: NavHostControl
             contentDescription = "",
            modifier = Modifier.
            align(Alignment.CenterHorizontally).
-           height(120.dp).width(80.dp), contentScale = ContentScale.FillWidth
+           height(120.dp).width(80.dp),
+            contentScale = ContentScale.FillWidth
         )
         Text(
             stringResource(id = item.titleResId),

@@ -8,7 +8,7 @@ object Constance {
         Category(
             "sports",R.drawable.ball,R.string.sports,R.color.red
         ),Category(
-            "politics",R.drawable.politics,R.string.politics,R.color.blue
+            "technology",R.drawable.politics,R.string.technology,R.color.blue
         ),Category(
             "health",R.drawable.health,R.string.health,R.color.bink
         ),Category(
