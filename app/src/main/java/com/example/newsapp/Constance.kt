@@ -3,7 +3,7 @@ package com.example.newsapp
 import com.example.newsapp.api.model.Category
 
 object Constance {
-    val API_KEY = "966bf2efeb3b467b97aee5316c055519"
+    const val API_KEY = "966bf2efeb3b467b97aee5316c055519"
     val categories = listOf(
         Category(
             "sports",R.drawable.ball,R.string.sports,R.color.red

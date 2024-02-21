@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NewsViewModel :ViewModel(){
+class NewsViewModel : ViewModel() {
     val sourcesList = mutableStateOf<List<SourceItem>>(listOf())
 
     val newsList = mutableStateOf<List<ArticlesItem>>(listOf())
@@ -22,8 +22,7 @@ class NewsViewModel :ViewModel(){
 
 
     fun getNewsBySources(
-        sourcesItem: SourceItem,
-        newsResponseState: MutableState<List<ArticlesItem>>
+        sourcesItem: SourceItem, newsResponseState: MutableState<List<ArticlesItem>>
     ) {
         APIManager.getNewsServices().getNewsBySources(Constance.API_KEY, sourcesItem.id ?: "")
             .enqueue(object : Callback<NewsResponse> {

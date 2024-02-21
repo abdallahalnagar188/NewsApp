@@ -2,6 +2,7 @@ package com.example.newsapp.widgets.news
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,12 +28,15 @@ import com.example.newsapp.api.model.SourceItem
 const val NEWS_ROUTE = "news/{category}"
 
 @Composable
-fun NewsFragment(category: String?,viewModel: NewsViewModel= androidx.lifecycle.viewmodel.compose.viewModel()) {
+fun NewsFragment(
+    category: String?,
+    viewModel: NewsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
 
 
     viewModel.getNewsSources(category, viewModel.sourcesList)
     Column {
-        NewsSourcesTabs(sourcesItemsList = viewModel.sourcesList.value,viewModel. newsList)
+        NewsSourcesTabs(sourcesItemsList = viewModel.sourcesList.value, viewModel.newsList)
         NewsList(articlesItem = viewModel.newsList.value)
     }
 }
@@ -46,34 +50,34 @@ fun NewsSourcesTabs(
 
     if (sourcesItemsList.isNotEmpty())
         ScrollableTabRow(selectedTabIndex = viewModel.selectedIndex.value,
-        containerColor = Color.Transparent,
-        divider = {},
-        indicator = {}) {
-        sourcesItemsList.forEachIndexed { index, sourcesItem ->
-            if (viewModel.selectedIndex.value == index) {
-                viewModel.getNewsBySources(sourcesItem, newsResponseState)
+            containerColor = Color.Transparent,
+            divider = {},
+            indicator = {}) {
+            sourcesItemsList.forEachIndexed { index, sourcesItem ->
+                if (viewModel.selectedIndex.value == index) {
+                    viewModel.getNewsBySources(sourcesItem, newsResponseState)
 
+                }
+                Tab(selected = viewModel.selectedIndex.value == index,
+                    onClick = {
+                        viewModel.selectedIndex.value = index
+                    },
+                    selectedContentColor = Color.White,
+                    unselectedContentColor = Color(0xFF39A552),
+                    modifier = if (viewModel.selectedIndex.value == index) Modifier
+                        .padding(end = 6.dp, top = 8.dp, bottom = 8.dp)
+                        .background(
+                            Color(0xFF39A552), RoundedCornerShape(50)
+                        )
+                    else Modifier
+                        .padding(end = 6.dp, top = 8.dp, bottom = 8.dp)
+                        .border(
+                            2.dp, Color(0xFF39A552), RoundedCornerShape(50)
+                        ),
+                    text = { Text(text = sourcesItem.name ?: "") }
+                )
             }
-            Tab(selected = viewModel.selectedIndex.value == index,
-                onClick = {
-                    viewModel.selectedIndex.value = index
-                },
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color(0xFF39A552),
-                modifier = if (viewModel.selectedIndex.value == index) Modifier
-                    .padding(end = 6.dp, top = 8.dp, bottom = 8.dp)
-                    .background(
-                        Color(0xFF39A552), RoundedCornerShape(50)
-                    )
-                else Modifier
-                    .padding(end = 6.dp, top = 8.dp, bottom = 8.dp)
-                    .border(
-                        2.dp, Color(0xFF39A552), RoundedCornerShape(50)
-                    ),
-                text = { Text(text = sourcesItem.name ?: "") }
-            )
         }
-    }
 }
 
 @Composable
@@ -91,7 +95,9 @@ fun NewsCard(articlesItem: ArticlesItem) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(12.dp).clickable {
+
+            }
     ) {
         GlideImage(
             model = articlesItem.urlToImage ?: "", contentDescription = "News Picture",

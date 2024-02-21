@@ -121,7 +121,6 @@ fun NewsAppBar(drawerState: DrawerState) {
     )
 }
 
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
