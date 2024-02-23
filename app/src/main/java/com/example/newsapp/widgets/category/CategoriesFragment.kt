@@ -25,13 +25,19 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.newsapp.CATEGORY_ROUTE
 import com.example.newsapp.Constance
 import com.example.newsapp.api.model.Category
 
 @Composable
 fun CategoriesContent(navHostController: NavHostController) {
-    Column(modifier = Modifier.fillMaxSize().padding(12 .dp)) {
-        Text(modifier = Modifier.padding(12.dp),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(12.dp)
+    ) {
+        Text(
+            modifier = Modifier.padding(12.dp),
             text = "Pick your category\n" +
                     "on interested",
             style = TextStyle(color = Color(0XFF4F5A69), fontSize = 20.sp)
@@ -39,7 +45,7 @@ fun CategoriesContent(navHostController: NavHostController) {
         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
             items(6) {
                 val item = Constance.categories.get(it)
-                CategoryCard(item = item, position = it,navHostController)
+                CategoryCard(item = item, position = it, navHostController)
             }
         }
     }
@@ -47,43 +53,49 @@ fun CategoriesContent(navHostController: NavHostController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryCard(item: Category, position: Int,navHostController: NavHostController) {
+fun CategoryCard(item: Category, position: Int, navHostController: NavHostController) {
     Card(
-        colors = CardDefaults.cardColors(containerColor =
-        colorResource(id = item.backGroundColor)),
+        colors = CardDefaults.cardColors(
+            containerColor =
+            colorResource(id = item.backGroundColor)
+        ),
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 12.dp),
         onClick = {
-            navHostController.navigate("news/${item.apiID}")
-        }
-        ,
+            navHostController.navigate("news/${item.apiID}"){
+                popUpTo(CATEGORY_ROUTE){
+                    inclusive = false
+                }
+
+            }
+
+        },
         shape =
-            if (position % 2 == 0)
-                RoundedCornerShape(
-                    topStart = 16.dp
-                    , topEnd = 16.dp
-                    , bottomStart = 16.dp
-                    , bottomEnd = 0.dp)
-            else
-                RoundedCornerShape(
-                    topStart = 16.dp
-                    , topEnd = 16.dp
-                    , bottomStart = 0.dp
-                    , bottomEnd = 16.dp)
+        if (position % 2 == 0)
+            RoundedCornerShape(
+                topStart = 16.dp, topEnd = 16.dp, bottomStart = 16.dp, bottomEnd = 0.dp
+            )
+        else
+            RoundedCornerShape(
+                topStart = 16.dp, topEnd = 16.dp, bottomStart = 0.dp, bottomEnd = 16.dp
+            )
 
     ) {
-        Image(painter = painterResource(id = item.drawableResId),
+        Image(
+            painter = painterResource(id = item.drawableResId),
             contentDescription = "",
-           modifier = Modifier.
-           align(Alignment.CenterHorizontally).
-           height(120.dp).width(80.dp),
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .height(120.dp)
+                .width(80.dp),
             contentScale = ContentScale.FillWidth
         )
         Text(
             stringResource(id = item.titleResId),
             style = TextStyle(color = Color.White),
-            fontSize = 20.sp,modifier = Modifier.
-            align(Alignment.CenterHorizontally).
-            padding(bottom = 16.dp)
+            fontSize = 20.sp,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 16.dp)
         )
     }
 }

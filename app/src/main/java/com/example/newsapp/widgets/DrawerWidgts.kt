@@ -50,7 +50,12 @@ fun DrawerBody(navController: NavHostController, onClose: () -> Unit) {
         Spacer(modifier = Modifier.padding(12.dp))
         NewsDrawerItem(iconId = R.drawable.ico_catigores, textId = R.string.categories,
             onNewsDrawerItemClick = {
-                navController.navigate(CATEGORY_ROUTE)
+                navController.navigate(CATEGORY_ROUTE){
+                    popUpTo(CATEGORY_ROUTE){
+                        inclusive = true
+                    }
+
+                }
                 onClose()
             })
         Spacer(modifier = Modifier.padding(12.dp))

@@ -67,7 +67,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }, drawerState = drawerState) {
                     Scaffold(topBar = { NewsAppBar(drawerState) }) {
-//                        NewsSourcesTabs(sourcesItemsList = sourcesList.value)
                         NavHost(
                             navController = navController,
                             startDestination = CATEGORY_ROUTE,
