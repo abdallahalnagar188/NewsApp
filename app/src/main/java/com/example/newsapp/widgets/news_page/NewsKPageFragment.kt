@@ -19,7 +19,11 @@ import com.example.newsapp.api.model.ArticlesItem
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun NewsPage(articlesItem: ArticlesItem) {
+fun NewsPage(
+    title: String,
+    author: String,
+    urlToImage: String,
+) {
     Row {
         Card(
             modifier = Modifier
@@ -27,38 +31,43 @@ fun NewsPage(articlesItem: ArticlesItem) {
                 .padding(12.dp)
         ) {
             GlideImage(
-                model = articlesItem.urlToImage ?: "", contentDescription = "News Picture",
+                model = urlToImage,
+                contentDescription = "News Picture",
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(4.dp, 2.dp)
             )
 
             Text(
-                text = articlesItem.author ?: "",
+                text = author ?: "",
                 style = TextStyle(color = Color.Gray), modifier = Modifier.padding(4.dp, 2.dp)
             )
             Text(
-                text = articlesItem.title ?: "",
+                text = title ?: "",
                 style = TextStyle(color = Color.Black, fontSize = 18.sp),
                 modifier = Modifier.padding(4.dp, 2.dp)
             )
-            Text(
-                text = articlesItem.publishedAt ?: "",
-                style = TextStyle(color = Color.Gray),
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .padding(4.dp, 2.dp)
-            )
+//            Text(
+//                text = publishedAt ?: "",
+//                style = TextStyle(color = Color.Gray),
+//                modifier = Modifier
+//                    .align(Alignment.End)
+//                    .padding(4.dp, 2.dp)
+//            )
         }
     }
-    Box (Modifier.fillMaxWidth().padding(12.dp)){
-        Text(
-            text = articlesItem.content ?: "",
-            style = TextStyle(color = Color.Black),
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(4.dp, 2.dp)
-        )
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+    ) {
+//        Text(
+//            text = description ?: "",
+//            style = TextStyle(color = Color.Black),
+//            modifier = Modifier
+//                .align(Alignment.Center)
+//                .padding(4.dp, 2.dp)
+//        )
     }
 
 }

@@ -20,8 +20,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.newsapp.NEWS_PAGE
 import com.example.newsapp.api.model.ArticlesItem
 import com.example.newsapp.api.model.SourceItem
 
@@ -30,14 +32,19 @@ const val NEWS_ROUTE = "news/{category}"
 @Composable
 fun NewsFragment(
     category: String?,
-    viewModel: NewsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-) {
+    navController: NavHostController,
+    viewModel: NewsViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+
+    ) {
 
 
     viewModel.getNewsSources(category, viewModel.sourcesList)
     Column {
         NewsSourcesTabs(sourcesItemsList = viewModel.sourcesList.value, viewModel.newsList)
-        NewsList(articlesItem = viewModel.newsList.value)
+        NewsList(articlesItem = viewModel.newsList.value, onClick = {
+            navController.navigate(
+                "news page/${it.title}/${it.description}/${it.content}")
+        })
     }
 }
 
@@ -81,26 +88,30 @@ fun NewsSourcesTabs(
 }
 
 @Composable
-fun NewsList(articlesItem: List<ArticlesItem>) {
+fun NewsList(articlesItem: List<ArticlesItem>, onClick: (ArticlesItem) -> Unit) {
     LazyColumn {
         items(articlesItem.size) {
-            NewsCard(articlesItem = articlesItem.get(it))
+            NewsCard(articlesItem = articlesItem[it], onClick = {
+                onClick(articlesItem.get(it))
+            })
         }
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun NewsCard(articlesItem: ArticlesItem) {
+fun NewsCard(articlesItem: ArticlesItem, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp).clickable {
-
+            .padding(12.dp)
+            .clickable {
+                onClick()
             }
     ) {
         GlideImage(
-            model = articlesItem.urlToImage ?: "", contentDescription = "News Picture",
+            model = articlesItem.urlToImage ?: "",
+            contentDescription = "News Picture",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(4.dp, 2.dp)

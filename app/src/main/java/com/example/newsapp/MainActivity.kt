@@ -39,9 +39,11 @@ import com.example.newsapp.widgets.DrawerBody
 import com.example.newsapp.widgets.DrawerHeader
 import com.example.newsapp.widgets.news.NEWS_ROUTE
 import com.example.newsapp.widgets.news.NewsFragment
+import com.example.newsapp.widgets.news_page.NewsPage
 import kotlinx.coroutines.launch
 
 const val CATEGORY_ROUTE = "categories"
+val NEWS_PAGE= "news page/{title}/{author}/{urlToImage}"
 
 class MainActivity : ComponentActivity() {
 
@@ -80,7 +82,23 @@ class MainActivity : ComponentActivity() {
                                 route = NEWS_ROUTE,
                             ) {
                                 val argument = it.arguments?.getString("category")
-                                NewsFragment(argument)
+                                NewsFragment(argument,navController)
+                            }
+                            composable(route = NEWS_PAGE){
+                                val title = it.arguments?.getString("title")
+                                val author = it.arguments?.getString("author")
+                                val urlToImage = it.arguments?.getString("urlToImage")
+                                if (title != null) {
+                                    if (author != null) {
+                                        if (urlToImage != null) {
+                                            NewsPage(
+                                                title = title,
+                                                author = author,
+                                                urlToImage = urlToImage,
+                                            )
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
