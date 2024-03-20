@@ -8,14 +8,14 @@ import retrofit2.http.Query
 
 interface NewsServices {
     @GET("top-headlines/sources")
-    fun getNewsSources(
+    suspend fun getNewsSources(
          @Query("apiKey") apiKey:String
         ,@Query("category")category: String?
-    ) :Call<SourceResponse>
+    ) :SourceResponse
 
     @GET("everything")
-    fun getNewsBySources(
+    suspend fun getNewsBySources(
         @Query("apiKey") apiKey: String,
         @Query("sources") sources: String?
-    ):Call<NewsResponse>
+    ): NewsResponse
 }
