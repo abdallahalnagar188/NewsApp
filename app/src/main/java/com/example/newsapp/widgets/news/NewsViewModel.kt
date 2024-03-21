@@ -10,7 +10,9 @@ import com.example.newsapp.Constance
 import com.example.newsapp.api.APIManager
 import com.example.newsapp.api.model.ArticlesItem
 import com.example.newsapp.api.model.SourceItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NewsViewModel : ViewModel() {
     val sourcesList = mutableStateOf<List<SourceItem>>(listOf())
@@ -24,10 +26,12 @@ class NewsViewModel : ViewModel() {
     ) {
         //Concurrency
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 val response = APIManager.getNewsServices()
                     .getNewsBySources(Constance.API_KEY, sourcesItem.id ?: "")
-                newsResponseState.value = response.articles ?: listOf()
+                withContext(Dispatchers.Main) {
+                    newsResponseState.value = response.articles ?: listOf()
+                }
             }
         } catch (ex: Exception) {
             Log.e("ex:", "${ex.message}")
