@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -76,6 +77,12 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
 
     val lifecycle_version = "2.7.0"
     val arch_version = "2.2.0"

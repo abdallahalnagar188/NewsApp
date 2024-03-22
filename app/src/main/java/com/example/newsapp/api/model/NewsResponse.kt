@@ -1,5 +1,6 @@
 package com.example.newsapp.api.model
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 data class NewsResponse(
@@ -22,7 +23,7 @@ data class Source(
 	@field:SerializedName("id")
 	val id: String? = null
 )
-
+@Entity
 data class ArticlesItem(
 
 	@field:SerializedName("publishedAt")
