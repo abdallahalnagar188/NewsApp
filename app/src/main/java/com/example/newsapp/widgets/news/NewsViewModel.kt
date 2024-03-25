@@ -61,7 +61,7 @@ class NewsViewModel : ViewModel() {
 
             }
         } catch (ex: Exception) {
-            Log.e("EX: ", "${ex.message}")
+            Log.e("EX: ", "${ex.localizedMessage}")
         }
 
 //            .enqueue(object : Callback<SourceResponse> {
