@@ -1,4 +1,4 @@
-package com.example.newsapp.repos
+package com.example.newsapp.repos.news
 
 import com.example.newsapp.api.model.ArticlesItem
 

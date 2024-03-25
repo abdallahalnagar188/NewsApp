@@ -1,6 +1,8 @@
 package com.example.newsapp.api.model
 
 import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class NewsResponse(
@@ -25,28 +27,29 @@ data class Source(
 )
 @Entity
 data class ArticlesItem(
-
+	@PrimaryKey(autoGenerate = true)
+	var id: Int? = null,
 	@field:SerializedName("publishedAt")
-	val publishedAt: String? = null,
+	var publishedAt: String? = null,
 
 	@field:SerializedName("author")
-	val author: String? = null,
+	var author: String? = null,
 
 	@field:SerializedName("urlToImage")
-	val urlToImage: String? = null,
+	var urlToImage: String? = null,
 
 	@field:SerializedName("description")
-	val description: String? = null,
-
+	var description: String? = null,
+	@Ignore
 	@field:SerializedName("source")
-	val source: Source? = null,
+	var source: Source? = null,
 
 	@field:SerializedName("title")
-	val title: String? = null,
+	var title: String? = null,
 
 	@field:SerializedName("url")
-	val url: String? = null,
+	var url: String? = null,
 
 	@field:SerializedName("content")
-	val content: String? = null
+	var content: String? = null
 )
