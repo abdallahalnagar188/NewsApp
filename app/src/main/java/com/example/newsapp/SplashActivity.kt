@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,20 +61,6 @@ fun SplashContent() {
         Image(painter = painterResource(id = R.drawable.logo_news),
             contentDescription = "App Logo")
         Spacer(modifier = Modifier.padding(60.dp))
-
-        Image(painter = painterResource(id = R.drawable.signture),
-            contentDescription = "App Signature",
-            modifier = Modifier.fillMaxSize(0.4F),Alignment.BottomCenter)
     }
 
-}
-    
-
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GreetingPreview() {
-    NewsAppTheme {
-        SplashContent()
-    }
 }

@@ -1,8 +1,10 @@
 package com.example.newsapp.widgets.news
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.newsapp.Constance
 import com.example.newsapp.api.APIManager
@@ -15,16 +17,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class NewsViewModel : ViewModel() {
-    val sourcesList = mutableStateOf<List<SourceItem>>(listOf())
 
+    val sourcesList = mutableStateOf<List<SourceItem>>(listOf())
     val newsList = mutableStateOf<List<ArticlesItem>>(listOf())
-    var selectedIndex = mutableIntStateOf(0)
+    var selectedIndex by mutableIntStateOf(0)
 
 
     fun getNewsBySources(
         sourcesItem: SourceItem, newsResponseState: MutableState<List<ArticlesItem>>
     ) {
-        APIManager.getNewsServices().getNewsBySources(Constance.API_KEY, sourcesItem.id ?: "")
+        APIManager.getNewsServices().
+        getNewsBySources(Constance.API_KEY, sourcesItem.id ?: "")
             .enqueue(object : Callback<NewsResponse> {
                 override fun onResponse(
                     call: Call<NewsResponse>, response: Response<NewsResponse>

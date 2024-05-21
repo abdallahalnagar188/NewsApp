@@ -27,7 +27,8 @@ fun NewsPage(articlesItem: ArticlesItem) {
                 .padding(12.dp)
         ) {
             GlideImage(
-                model = articlesItem.urlToImage ?: "", contentDescription = "News Picture",
+                model = articlesItem.urlToImage ?: "",
+                contentDescription = "News Picture",
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(4.dp, 2.dp)

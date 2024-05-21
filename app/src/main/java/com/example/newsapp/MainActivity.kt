@@ -27,16 +27,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.ui.theme.NewsAppTheme
-import com.example.newsapp.widgets.category.CategoriesContent
 import com.example.newsapp.widgets.DrawerBody
 import com.example.newsapp.widgets.DrawerHeader
+import com.example.newsapp.widgets.category.CategoriesContent
 import com.example.newsapp.widgets.news.NEWS_ROUTE
 import com.example.newsapp.widgets.news.NewsFragment
 import kotlinx.coroutines.launch
@@ -108,7 +107,6 @@ fun NewsAppBar(drawerState: DrawerState) {
     ), navigationIcon = {
         IconButton(onClick = {
             scope.launch { drawerState.open() }
-
         }) {
             Icon(
                 painter = painterResource(id = R.drawable.ico_menu),
@@ -116,17 +114,5 @@ fun NewsAppBar(drawerState: DrawerState) {
             )
         }
     }
-
     )
-}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun Preview() {
-    NewsAppTheme {
-        Scaffold {
-
-        }
-    }
 }

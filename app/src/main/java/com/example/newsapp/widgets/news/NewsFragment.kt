@@ -49,22 +49,22 @@ fun NewsSourcesTabs(
 ) {
 
     if (sourcesItemsList.isNotEmpty())
-        ScrollableTabRow(selectedTabIndex = viewModel.selectedIndex.value,
+        ScrollableTabRow(selectedTabIndex = viewModel.selectedIndex,
             containerColor = Color.Transparent,
             divider = {},
             indicator = {}) {
             sourcesItemsList.forEachIndexed { index, sourcesItem ->
-                if (viewModel.selectedIndex.value == index) {
+                if (viewModel.selectedIndex == index) {
                     viewModel.getNewsBySources(sourcesItem, newsResponseState)
 
                 }
-                Tab(selected = viewModel.selectedIndex.value == index,
+                Tab(selected = viewModel.selectedIndex == index,
                     onClick = {
-                        viewModel.selectedIndex.value = index
+                        viewModel.selectedIndex = index
                     },
                     selectedContentColor = Color.White,
                     unselectedContentColor = Color(0xFF39A552),
-                    modifier = if (viewModel.selectedIndex.value == index) Modifier
+                    modifier = if (viewModel.selectedIndex == index) Modifier
                         .padding(end = 6.dp, top = 8.dp, bottom = 8.dp)
                         .background(
                             Color(0xFF39A552), RoundedCornerShape(50)
