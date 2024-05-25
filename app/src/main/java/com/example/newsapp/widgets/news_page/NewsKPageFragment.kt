@@ -13,10 +13,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.newsapp.api.model.ArticlesItem
-
+var newsPage = "newsPage"
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun NewsPage(articlesItem: ArticlesItem) {

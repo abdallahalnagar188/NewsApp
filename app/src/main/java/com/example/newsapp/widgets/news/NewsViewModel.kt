@@ -60,6 +60,7 @@ class NewsViewModel : ViewModel() {
 
                 }
 
-            })
+            }
+            )
     }
 }

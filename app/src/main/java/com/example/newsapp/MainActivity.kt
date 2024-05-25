@@ -32,12 +32,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.newsapp.api.model.ArticlesItem
 import com.example.newsapp.ui.theme.NewsAppTheme
 import com.example.newsapp.widgets.DrawerBody
 import com.example.newsapp.widgets.DrawerHeader
 import com.example.newsapp.widgets.category.CategoriesContent
 import com.example.newsapp.widgets.news.NEWS_ROUTE
 import com.example.newsapp.widgets.news.NewsFragment
+import com.example.newsapp.widgets.news_page.NewsPage
+import com.example.newsapp.widgets.news_page.newsPage
 import kotlinx.coroutines.launch
 
 const val CATEGORY_ROUTE = "categories"
@@ -103,7 +106,8 @@ fun NewsAppBar(drawerState: DrawerState) {
             topStart = 0.dp, topEnd = 0.dp, bottomStart = 30.dp, bottomEnd = 30.dp
         )
     ), colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-        containerColor = Color(0xFF39A552), navigationIconContentColor = Color.White
+        containerColor = Color(0xFF39A552),
+        navigationIconContentColor = Color.White
     ), navigationIcon = {
         IconButton(onClick = {
             scope.launch { drawerState.open() }

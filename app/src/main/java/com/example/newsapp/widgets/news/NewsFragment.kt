@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -20,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.newsapp.api.model.ArticlesItem
@@ -30,7 +33,7 @@ const val NEWS_ROUTE = "news/{category}"
 @Composable
 fun NewsFragment(
     category: String?,
-    viewModel: NewsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: NewsViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
 ) {
 
 
@@ -89,15 +92,13 @@ fun NewsList(articlesItem: List<ArticlesItem>) {
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun NewsCard(articlesItem: ArticlesItem) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp).clickable {
-
-            }
+            .padding(12.dp), onClick = {}
     ) {
         GlideImage(
             model = articlesItem.urlToImage ?: "", contentDescription = "News Picture",

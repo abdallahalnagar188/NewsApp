@@ -61,8 +61,6 @@ fun DrawerBody(navController: NavHostController, onClose: () -> Unit) {
         Spacer(modifier = Modifier.padding(12.dp))
         NewsDrawerItem(iconId = R.drawable.ico_settings, textId = R.string.settings,
             onNewsDrawerItemClick = {
-
-
             })
     }
 }
